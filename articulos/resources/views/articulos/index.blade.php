@@ -1,6 +1,6 @@
 @extends('plantillas.plantilla')
 @section('titulo')
-Marcas
+Bazar García
 @endsection
 @section('cabecera')
 Artículos
@@ -11,6 +11,32 @@ Artículos
 @endif
 <div class="container">
 <a href="{{route('articulos.create')}}" class="btn btn-success mb-1">Crear Artículo</a>
+<form name="search" method="get" action="{{route('articulos.index')}}" class="form-inline float-right">
+  <i class="fa fa-search fa-2x ml-2 mr-2" aria-hidden="true"></i>
+  <label for="categoria" class="mr-2">Categoria</label>
+  <select name='categoria' class='form-control mr-2' onchange="this.form.submit()">
+    <option value='%'>Todos</option>
+    @foreach($categorias as $categoria)
+      @if($categoria==$request->categoria)
+        <option selected>{{$categoria}}</option>
+      
+      @else
+        <option >{{$categoria}}</option>
+      @endif
+    @endforeach
+  </select> 
+  <label for="precio" class="mr-2">Precio</label>
+  <select name='precio' class='form-control mr-2' onchange="this.form.submit()">
+    @foreach($precios as $p => $pv)
+      @if($p==$request->precio)
+        <option value={{$p}} selected>{{$pv}}</option>
+      @else
+      <option value={{$p}} >{{$pv}}</option>        
+      @endif
+    @endforeach
+  </select> 
+  <input type="submit" value="Buscar" class="btn btn-info ml-2">
+</form>
 </div>
 <table class="table table-striped table-dark mt-3">
     <thead>
@@ -49,5 +75,5 @@ Artículos
      @endforeach
     </tbody>
   </table>
-  {{$articulos->links()}}
+  {{$articulos->appends(Request::except('page'))->links()}}
 @endsection
