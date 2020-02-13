@@ -20,9 +20,11 @@ Editar Artículo
     @method('PUT')
     <div class="form-row">
       <div class="col">
+        <label for="nombre">Nombre</label>
         <input type="text" class="form-control" value="{{$articulo->nombre}}" name='nombre' required>
       </div>
         <div class="col">
+          <label for="categoria">Categoria</label>
           <select name='categoria' class="form-control">
                 @foreach($categorias as $categoria)
                 @if($categoria==$articulo->categoria)
